@@ -70,9 +70,10 @@
 	 */
 	function source($link) {
 		$ext = pathinfo($link, PATHINFO_EXTENSION);
-		global $minify;
-		if ($minify && $ext == 'js' && strpos($link, '.min') === false)
+		if (defined('MIN_JS') && MIN_JS && $ext == 'js' && strpos($link, '.min') === false)
 			$link = str_replace('.js', '.min.js', $link);
+		if (defined('MIN_CSS') && MIN_CSS && $ext == 'css' && strpos($link, '.min') === false)
+			$link = str_replace('.css', '.min.css', $link);
 		if (strrpos($link, 'http', -strlen($link)) === false) {
 			$link = "$ext/$link";
 			for ($limit = 100, $prefix = ''; $limit > 0; --$limit, $prefix = "../$prefix") {
